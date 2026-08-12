@@ -105,7 +105,7 @@ export const PlacementsPage: React.FC = () => {
           </CardHeader>
           <CardContent className="p-6 pt-2">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[500px]">
+              <table className="w-full text-left border-collapse min-w-125">
                 <thead>
                   <tr className="border-b border-border-color text-xs font-bold text-secondary-text uppercase tracking-wider font-mono">
                     <th className="pb-3 text-left">Course</th>
