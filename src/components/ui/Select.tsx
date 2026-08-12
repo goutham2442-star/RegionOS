@@ -18,8 +18,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         )}
         <select
           ref={ref}
-          className={`px-3 py-2 border border-border-color rounded-lg text-sm text-primary-text bg-white focus:outline-none focus:ring-1 focus:ring-primary-blue focus:border-primary-blue transition-all disabled:bg-muted-bg disabled:text-secondary-text/80 cursor-pointer ${
-            error ? "border-danger-red focus:ring-danger-red focus:border-danger-red" : ""
+          className={`regionos-input cursor-pointer ${
+            error ? "regionos-input-error" : ""
           } ${className}`}
           {...props}
         >

@@ -25,3 +25,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
+@utility regionos-input {
+  @apply px-3 py-2 border border-border-color rounded-lg text-sm text-primary-text bg-white placeholder-secondary-text/50 focus:outline-none focus:ring-1 focus:ring-primary-blue focus:border-primary-blue transition-all disabled:bg-muted-bg disabled:text-secondary-text/80;
+}
+
+@utility regionos-input-error {
+  @apply border-danger-red focus:ring-danger-red focus:border-danger-red;
+}
