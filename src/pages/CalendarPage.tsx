@@ -398,7 +398,7 @@ export const CalendarPage: React.FC = () => {
                   <div
                     key={day.getTime()}
                     onClick={() => handleTimeSlotClick(day, hour)}
-                    className="p-1 hover:bg-muted-bg/10 transition-colors border-r border-border-color last:border-r-0 min-h-16 relative cursor-pointer"
+                    className="p-1 hover:bg-muted-bg/10 transition-colors not-last:border-r not-last:border-border-color min-h-16 relative cursor-pointer"
                   >
                     {dayEvents.map(event => (
                       <div
