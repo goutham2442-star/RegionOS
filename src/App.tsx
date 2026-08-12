@@ -13,6 +13,7 @@ import { Profile } from "./pages/Profile";
 import { Aligns } from "./pages/Aligns";
 import { Settings } from "./pages/Settings";
 import { Help } from "./pages/Help";
+import { CalendarPage } from "./pages/CalendarPage";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
         {/* Dashboard and administrative consoles */}
         <Route path="/dashboard" element={<Dashboard />} />
         
+        {/* Calendar Management */}
+        <Route path="/calendar" element={<CalendarPage />} />
+
         {/* Campus list and detailed campus consoles */}
         <Route path="/campus" element={<Campus />} />
         <Route path="/campus/:id" element={<CampusDetail />} />

@@ -10,6 +10,7 @@ import {
   HelpCircle,
   LogOut,
   X,
+  Calendar,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -21,6 +22,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
   const mainNavItems = [
     { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
     { name: "Campus", path: "/campus", icon: Building2 },
+    { name: "Calendar", path: "/calendar", icon: Calendar },
     { name: "Aligns", path: "/aligns", icon: ArrowLeftRight },
     { name: "Awaiting", path: "/aligns?awaiting=true", icon: Clock3 },
   ];

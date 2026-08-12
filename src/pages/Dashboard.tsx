@@ -23,10 +23,13 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Date Selector */}
-        <div className="flex items-center gap-2.5 px-3 py-2 bg-white border border-border-color rounded-lg text-xs font-semibold font-mono text-secondary-text shadow-sm select-none">
+        <button
+          onClick={() => navigate("/calendar")}
+          className="flex items-center gap-2.5 px-3 py-2 bg-white border border-border-color rounded-lg text-xs font-semibold font-mono text-secondary-text shadow-sm hover:border-primary-blue/35 transition-colors cursor-pointer focus:outline-none"
+        >
           <Calendar className="w-3.5 h-3.5" />
           <span>AUG 10, 2026</span>
-        </div>
+        </button>
       </div>
 
       {/* Main Grid Section */}
