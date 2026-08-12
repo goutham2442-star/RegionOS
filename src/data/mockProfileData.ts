@@ -10,9 +10,9 @@ export interface UserProfile {
 
 export const mockProfileData: UserProfile = {
   id: "usr-459",
-  name: "Goutham Gagan",
-  email: "g.gagan@regionos.gov",
-  role: "Regional Administrator",
-  joinedDate: "2024-03-15",
-  department: "Central Operations & Governance",
+  name: "Guruprasath P",
+  email: "guruprasath.p@regionos.demo",
+  role: "Regional Director",
+  joinedDate: "October 14, 2018",
+  department: "Executive Leadership",
 };

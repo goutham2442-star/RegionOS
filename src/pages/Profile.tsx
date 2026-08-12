@@ -18,9 +18,9 @@ export const Profile: React.FC = () => {
   const navigate = useNavigate();
 
   // Profile data states
-  const [name, setName] = useState("Dr. Rajesh Kumar");
-  const [email, setEmail] = useState("r.kumar@rgu.edu");
-  const [phone, setPhone] = useState("+91 9991 000-2321");
+  const [name, setName] = useState("Guruprasath P");
+  const [email, setEmail] = useState("guruprasath.p@regionos.demo");
+  const [phone, setPhone] = useState("+91 98765 43210");
   const [dept, setDept] = useState("Executive Leadership");
 
   // Credential states
@@ -204,11 +204,13 @@ export const Profile: React.FC = () => {
           <Card className="flex flex-col items-center text-center p-8">
             {/* Professional initials placeholder avatar */}
             <div className="w-20 h-20 rounded-full bg-primary-blue/10 border border-primary-blue/20 flex items-center justify-center text-primary-blue mb-4 select-none">
-              <span className="text-2xl font-bold font-sans">RK</span>
+              <span className="text-2xl font-bold font-sans">
+                {name.split(" ").filter((n) => !n.includes(".")).map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "GP"}
+              </span>
             </div>
             
             <h2 className="text-lg font-bold text-primary-text m-0">
-              Dr. Rajesh Kumar
+              {name}
             </h2>
             <span className="text-xs font-bold text-secondary-text uppercase tracking-widest font-mono mt-1">
               Regional Director
