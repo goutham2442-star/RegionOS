@@ -145,7 +145,7 @@ export const FacultyPage: React.FC = () => {
                 setDeptFilter(e.target.value);
                 setPage(1);
               }}
-              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-[120px]"
+              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-30"
             >
               {depts.map((d) => (
                 <option key={d} value={d}>{d}</option>
@@ -161,7 +161,7 @@ export const FacultyPage: React.FC = () => {
                 setDesigFilter(e.target.value);
                 setPage(1);
               }}
-              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-[120px]"
+              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-30"
             >
               {desigs.map((d) => (
                 <option key={d} value={d}>{d}</option>
@@ -177,7 +177,7 @@ export const FacultyPage: React.FC = () => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
-              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-[100px]"
+              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-25"
             >
               {statuses.map((s) => (
                 <option key={s} value={s}>{s}</option>
@@ -191,7 +191,7 @@ export const FacultyPage: React.FC = () => {
       <Card className="text-left">
         <CardContent className="p-6">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[800px]">
+            <table className="w-full text-left border-collapse min-w-200">
               <thead>
                 <tr className="border-b border-border-color text-xs font-bold text-secondary-text uppercase tracking-wider font-mono">
                   <th className="pb-3 text-left">Faculty</th>
