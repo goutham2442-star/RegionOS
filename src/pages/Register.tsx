@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate as useNav, Link as LinkDom } from "react-router-dom";
 import { RegionOSLogo } from "../components/brand/RegionOSLogo";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
@@ -8,96 +8,154 @@ import { Card } from "../components/ui/Card";
 import { User, Mail } from "lucide-react";
 
 export const Register: React.FC = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("Regional Administrator");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("Jane Doe");
+  const [email, setEmail] = useState("jane@regionos.gov");
+  const [region, setRegion] = useState("region-north");
+  const [password, setPassword] = useState("password123");
+  const [confirmPassword, setConfirmPassword] = useState("password123");
+  const [errors, setErrors] = useState<{
+    fullName?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  }>({});
+  const [success, setSuccess] = useState(false);
+  const navigate = useNav();
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email) {
-      navigate("/dashboard");
+    const tempErrors: typeof errors = {};
+
+    if (!fullName) tempErrors.fullName = "Full Name is required.";
+    if (!email) {
+      tempErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      tempErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!password) {
+      tempErrors.password = "Password is required.";
+    } else if (password.length < 6) {
+      tempErrors.password = "Password must be at least 6 characters.";
+    }
+
+    if (password !== confirmPassword) {
+      tempErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    if (Object.keys(tempErrors).length > 0) {
+      setErrors(tempErrors);
     } else {
-      setError("Please fill in all fields.");
+      setErrors({});
+      setSuccess(true);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
     }
   };
 
-  const roleOptions = [
-    { value: "Regional Administrator", label: "Regional Administrator" },
-    { value: "Campus Dean", label: "Campus Dean" },
-    { value: "Department Head", label: "Department Head" },
-    { value: "Audit Officer", label: "Audit Officer" },
+  const regionOptions = [
+    { value: "", label: "Select your operating region" },
+    { value: "region-north", label: "North Regional Campus Zone" },
+    { value: "region-south", label: "South Regional Campus Zone" },
+    { value: "region-east", label: "East Regional Campus Zone" },
+    { value: "region-west", label: "West Regional Campus Zone" },
   ];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-page-bg p-6">
-      <div className="w-full max-w-105 flex flex-col gap-8">
+      <div className="w-full max-w-105 flex flex-col gap-6">
+        {/* Centered logo */}
         <div className="flex flex-col items-center gap-2">
-          <RegionOSLogo variant="light" size="lg" />
-          <p className="text-sm text-secondary-text mt-2">
-            Regional University Governance Platform
-          </p>
+          <RegionOSLogo variant="light" size="md" showText={true} />
         </div>
 
-        <Card className="p-8">
-          <h2 className="text-xl font-semibold text-primary-text mb-1 text-left">
-            Register Account
-          </h2>
-          <p className="text-sm text-secondary-text mb-6 text-left">
-            Create administrative credentials for the system.
-          </p>
+        {/* Create Account Card */}
+        <Card className="p-8 text-left">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-primary-text tracking-tight m-0">
+              Create Account
+            </h2>
+            <p className="text-sm text-secondary-text mt-1.5">
+              Register to access the regional governance platform.
+            </p>
+          </div>
 
-          <form onSubmit={handleRegister} className="flex flex-col gap-4">
-            {error && (
-              <div className="p-3 text-xs bg-danger-red/10 border border-danger-red/20 text-danger-red rounded-lg text-left">
-                {error}
+          {success ? (
+            <div className="p-4 bg-success-green/10 border border-success-green/20 text-success-green text-sm rounded-lg mb-4 text-center font-medium">
+              Registration successful! Redirecting to login...
+            </div>
+          ) : (
+            <form onSubmit={handleRegister} className="flex flex-col gap-4">
+              {/* Full Name */}
+              <div className="relative">
+                <User className="absolute right-3 top-9.5 w-4 h-4 text-secondary-text/60" />
+                <Input
+                  label="FULL NAME"
+                  placeholder="Jane Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  error={errors.fullName}
+                />
               </div>
-            )}
 
-            <div className="relative">
-              <User className="absolute right-3 top-9 w-4 h-4 text-secondary-text/60" />
-              <Input
-                label="FULL NAME"
-                placeholder="Dr. Alexander Wright"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+              {/* Work Email */}
+              <div className="relative">
+                <Mail className="absolute right-3 top-9.5 w-4 h-4 text-secondary-text/60" />
+                <Input
+                  label="WORK EMAIL"
+                  type="email"
+                  placeholder="jane@regionos.gov"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={errors.email}
+                />
+              </div>
+
+              {/* Region Select */}
+              <Select
+                label="REGION"
+                options={regionOptions}
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
               />
-            </div>
 
-            <div className="relative">
-              <Mail className="absolute right-3 top-9 w-4 h-4 text-secondary-text/60" />
+              {/* Password */}
               <Input
-                label="OFFICIAL EMAIL"
-                type="email"
-                placeholder="a.wright@regionos.gov"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                label="PASSWORD"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={errors.password}
               />
-            </div>
 
-            <Select
-              label="ASSIGNED ROLE"
-              options={roleOptions}
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            />
+              {/* Confirm Password */}
+              <Input
+                label="CONFIRM PASSWORD"
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                error={errors.confirmPassword}
+              />
 
-            <Button type="submit" variant="blue" className="w-full mt-2 py-2.5">
-              Request Authorization
-            </Button>
-          </form>
+              <Button type="submit" variant="blue" className="w-full mt-2 py-2.5">
+                Create Account &rarr;
+              </Button>
+            </form>
+          )}
+
+          <div className="text-center mt-6 text-xs text-secondary-text">
+            Already have an account?{" "}
+            <LinkDom
+              to="/login"
+              className="text-primary-blue hover:underline font-semibold"
+            >
+              Sign in
+            </LinkDom>
+          </div>
         </Card>
-
-        <div className="text-center text-xs text-secondary-text">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-primary-blue hover:underline font-semibold"
-          >
-            Sign in here
-          </Link>
-        </div>
       </div>
     </div>
   );
