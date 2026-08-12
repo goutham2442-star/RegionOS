@@ -225,7 +225,7 @@ export const CalendarPage: React.FC = () => {
                   placeholder="Provide meeting agenda or notes..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="regionos-input min-h-[80px]"
+                  className="regionos-input min-h-20"
                 />
               </div>
 
