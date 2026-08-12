@@ -46,7 +46,7 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
           to="/profile"
           className="flex items-center gap-3 hover:opacity-90 transition-opacity focus:outline-none"
         >
-          <div className="text-right hidden sm:flex flex-col text-left">
+          <div className="text-right hidden sm:flex flex-col">
             <span className="text-sm font-semibold text-primary-text leading-none">
               {profile?.name || "Administrator"}
             </span>

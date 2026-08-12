@@ -71,7 +71,7 @@ export const FeesPage: React.FC = () => {
     <AppShell>
       {/* Toast Feedback */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#0B162B] text-white border border-[#1e293b] px-4 py-3 rounded-lg flex items-center gap-2.5 shadow-lg animate-bounce text-xs font-semibold font-mono tracking-wide select-none">
+        <div className="fixed bottom-6 right-6 z-50 bg-dark-navy text-white border border-[#1e293b] px-4 py-3 rounded-lg flex items-center gap-2.5 shadow-lg animate-bounce text-xs font-semibold font-mono tracking-wide select-none">
           <CheckCircle className="w-4 h-4 text-success-green" />
           <span>{toast}</span>
         </div>

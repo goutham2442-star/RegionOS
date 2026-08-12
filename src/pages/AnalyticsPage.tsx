@@ -219,7 +219,7 @@ export const AnalyticsPage: React.FC = () => {
             </div>
             
             {/* Semester Selector */}
-            <div className="w-28 flex-shrink-0">
+            <div className="w-28 shrink-0">
               <Select
                 options={[
                   { value: "FALL '25", label: "FALL '25" },

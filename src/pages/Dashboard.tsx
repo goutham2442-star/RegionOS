@@ -58,7 +58,7 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* Minimalist SVG Campus Art */}
-          <div className="w-full md:w-64 bg-[#F3F4F6] border-t md:border-t-0 md:border-l border-border-color flex items-center justify-center p-8 select-none">
+          <div className="w-full md:w-64 bg-muted-bg border-t md:border-t-0 md:border-l border-border-color flex items-center justify-center p-8 select-none">
             <svg
               viewBox="0 0 100 100"
               fill="none"
