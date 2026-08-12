@@ -25,7 +25,7 @@ export const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-[260px] h-screen bg-[#0B162B] flex flex-col justify-between p-6 border-r border-[#1e293b] flex-shrink-0 select-none">
+    <aside className="w-65 h-screen bg-dark-navy flex flex-col justify-between p-6 border-r border-[#1e293b] shrink-0 select-none">
       {/* Top Part: Logo */}
       <div className="flex flex-col gap-8">
         <NavLink to="/dashboard" className="block focus:outline-none">
@@ -42,11 +42,11 @@ export const Sidebar: React.FC = () => {
                 const baseClass =
                   "flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all group focus:outline-none focus:ring-1 focus:ring-primary-blue";
                 return isActive
-                  ? `${baseClass} bg-[#1465D8] text-white shadow-sm font-semibold`
+                  ? `${baseClass} bg-primary-blue text-white shadow-sm font-semibold`
                   : `${baseClass} text-[#9CA3AF] hover:text-white hover:bg-white/5`;
               }}
             >
-              <item.icon className="w-4 h-4 flex-shrink-0" />
+              <item.icon className="w-4 h-4 shrink-0" />
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -64,11 +64,11 @@ export const Sidebar: React.FC = () => {
                 const baseClass =
                   "flex items-center gap-3 px-4 py-2 text-sm font-medium transition-all group focus:outline-none";
                 return isActive
-                  ? `${baseClass} bg-[#1465D8] text-white shadow-sm`
+                  ? `${baseClass} bg-primary-blue text-white shadow-sm`
                   : `${baseClass} text-[#9CA3AF] hover:text-white hover:bg-white/5`;
               }}
             >
-              <item.icon className="w-4 h-4 flex-shrink-0" />
+              <item.icon className="w-4 h-4 shrink-0" />
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -78,7 +78,7 @@ export const Sidebar: React.FC = () => {
           to="/login"
           className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all focus:outline-none"
         >
-          <LogOut className="w-4 h-4 flex-shrink-0" />
+          <LogOut className="w-4 h-4 shrink-0" />
           <span>Logout</span>
         </NavLink>
       </div>

@@ -32,7 +32,7 @@ export const Register: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-page-bg p-6">
-      <div className="w-full max-w-[420px] flex flex-col gap-8">
+      <div className="w-full max-w-105 flex flex-col gap-8">
         <div className="flex flex-col items-center gap-2">
           <RegionOSLogo variant="light" size="lg" />
           <p className="text-sm text-secondary-text mt-2">

@@ -82,7 +82,7 @@ export const CampusDetail: React.FC = () => {
       {/* Header Context */}
       <div className="flex flex-col md:flex-row md:items-center justify-between text-left gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-[#0B162B] text-white rounded-xl flex items-center justify-center font-bold font-mono">
+          <div className="w-12 h-12 bg-dark-navy text-white rounded-xl flex items-center justify-center font-bold font-mono">
             {campus.code.split("-")[1] || "CP"}
           </div>
           <div>

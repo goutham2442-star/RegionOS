@@ -37,7 +37,7 @@ export const RegionOSLogo: React.FC<RegionOSLogoProps> = ({
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`${sizeClasses[size].svg} flex-shrink-0`}
+        className={`${sizeClasses[size].svg} shrink-0`}
       >
         {/* Outer dark rounded square */}
         <rect

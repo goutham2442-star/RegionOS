@@ -35,7 +35,7 @@ export const Breadcrumbs: React.FC = () => {
 
         return (
           <div key={to} className="flex items-center gap-1">
-            <ChevronRight className="w-3 h-3 text-border-color flex-shrink-0" />
+            <ChevronRight className="w-3 h-3 text-border-color shrink-0" />
             {isLast ? (
               <span className="font-medium text-primary-text">{label}</span>
             ) : (
