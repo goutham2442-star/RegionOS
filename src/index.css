@@ -26,10 +26,42 @@
   }
 }
 
-@utility regionos-input {
-  @apply px-3 py-2 border border-border-color rounded-lg text-sm text-primary-text bg-white placeholder-secondary-text/50 focus:outline-none focus:ring-1 focus:ring-primary-blue focus:border-primary-blue transition-all disabled:bg-muted-bg disabled:text-secondary-text/80;
+/* Custom Input Styles using Standard CSS Selectors to resolve linter conflicts */
+.regionos-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-color);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-primary-text);
+  background-color: #ffffff;
+  transition: all 0.15s ease-in-out;
+  outline: none;
+  width: 100%;
 }
 
-@utility regionos-input-error {
-  @apply border-danger-red focus:ring-danger-red focus:border-danger-red;
+.regionos-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-primary-blue);
+  border-color: var(--color-primary-blue);
+}
+
+.regionos-input::placeholder {
+  color: var(--color-secondary-text);
+  opacity: 0.5;
+}
+
+.regionos-input:disabled {
+  background-color: var(--color-muted-bg);
+  color: var(--color-secondary-text);
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.regionos-input-error {
+  border-color: var(--color-danger-red);
+}
+
+.regionos-input-error:focus {
+  box-shadow: 0 0 0 1px var(--color-danger-red);
+  border-color: var(--color-danger-red);
 }
