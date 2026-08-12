@@ -38,7 +38,15 @@ export const MetricCard: React.FC<MetricCardProps> = ({
             {value}
           </span>
         </div>
-        {icon && <div className="text-secondary-text p-2 rounded-lg bg-muted-bg/50">{icon}</div>}
+        {icon && (
+          <div
+            className={`p-2 rounded-lg shrink-0 ${
+              highlighted ? "bg-primary-blue/10 text-primary-blue" : "bg-muted-bg/50 text-secondary-text"
+            }`}
+          >
+            {icon}
+          </div>
+        )}
       </div>
 
       {trend && (

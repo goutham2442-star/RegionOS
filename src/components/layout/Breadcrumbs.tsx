@@ -8,9 +8,9 @@ export const Breadcrumbs: React.FC = () => {
 
   // Helper to map paths to human readable labels
   const getLabel = (path: string) => {
-    if (path === "rgu") return "Royal Governance University";
-    if (path === "rgus") return "RGU - Southern Campus";
-    if (path === "rgue") return "RGU - Eastern Campus";
+    if (path === "rgu") return "RGU";
+    if (path === "rgus") return "RGUS";
+    if (path === "rgue") return "RGUE";
     
     // Capitalize first letter
     return path.charAt(0).toUpperCase() + path.slice(1);

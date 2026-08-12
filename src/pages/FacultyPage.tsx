@@ -2,8 +2,6 @@ import React, { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AppShell } from "../components/layout/AppShell";
 import { Card, CardContent } from "../components/ui/Card";
-import { Input } from "../components/ui/Input";
-import { Select } from "../components/ui/Select";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import { Search } from "lucide-react";
@@ -76,14 +74,12 @@ export const FacultyPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [page, setPage] = useState(1);
 
-  // Departments list for dropdown
+  // Filter Categories
   const depts = ["All", "Computer Science", "Business Administration", "Bio-Engineering", "Architecture", "History"];
-  // Designations list for dropdown
   const desigs = ["All", "Professor", "Associate Prof.", "Assistant Prof.", "Professor Emeritus"];
-  // Status list for dropdown
   const statuses = ["All", "ACTIVE", "INACTIVE", "ON LEAVE"];
 
-  // Filtered and searched records
+  // Filter logic
   const filteredRecords = useMemo(() => {
     return mockFacultyRecords.filter((rec) => {
       const matchesSearch =
@@ -100,7 +96,6 @@ export const FacultyPage: React.FC = () => {
   }, [search, deptFilter, desigFilter, statusFilter]);
 
   const displayedRecords = useMemo(() => {
-    // Basic frontend pagination logic (max 5 items per page)
     const itemsPerPage = 5;
     const start = (page - 1) * itemsPerPage;
     return filteredRecords.slice(start, start + itemsPerPage);
@@ -123,113 +118,147 @@ export const FacultyPage: React.FC = () => {
         </Button>
       </div>
 
-      {/* Filter and Search controls */}
-      <Card className="text-left">
-        <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-4 p-1">
-          <div className="relative">
-            <Search className="absolute right-3 top-9.5 w-4 h-4 text-secondary-text/60" />
-            <Input
-              label="Search Faculty"
-              placeholder="Search faculty..."
-              value={search}
+      {/* Filter and Search Bar Container */}
+      <div className="bg-white border border-border-color rounded-xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-left">
+        {/* Search */}
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary-text/60" />
+          <input
+            type="text"
+            placeholder="Search faculty..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
+            className="regionos-input pl-9"
+          />
+        </div>
+
+        {/* Filters */}
+        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-secondary-text font-mono uppercase tracking-wider">
+          <div className="flex items-center gap-2">
+            <span>Department:</span>
+            <select
+              value={deptFilter}
               onChange={(e) => {
-                setSearch(e.target.value);
+                setDeptFilter(e.target.value);
                 setPage(1);
               }}
-            />
+              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-[120px]"
+            >
+              {depts.map((d) => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
           </div>
 
-          <Select
-            label="Department"
-            options={depts.map((d) => ({ value: d, label: d }))}
-            value={deptFilter}
-            onChange={(e) => {
-              setDeptFilter(e.target.value);
-              setPage(1);
-            }}
-          />
+          <div className="flex items-center gap-2">
+            <span>Designation:</span>
+            <select
+              value={desigFilter}
+              onChange={(e) => {
+                setDesigFilter(e.target.value);
+                setPage(1);
+              }}
+              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-[120px]"
+            >
+              {desigs.map((d) => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
 
-          <Select
-            label="Designation"
-            options={desigs.map((d) => ({ value: d, label: d }))}
-            value={desigFilter}
-            onChange={(e) => {
-              setDesigFilter(e.target.value);
-              setPage(1);
-            }}
-          />
-
-          <Select
-            label="Status"
-            options={statuses.map((s) => ({ value: s, label: s }))}
-            value={statusFilter}
-            onChange={(e) => {
-              setStatusFilter(e.target.value);
-              setPage(1);
-            }}
-          />
-        </CardContent>
-      </Card>
+          <div className="flex items-center gap-2">
+            <span>Status:</span>
+            <select
+              value={statusFilter}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                setPage(1);
+              }}
+              className="regionos-input py-1.5 px-3 cursor-pointer w-auto min-w-[100px]"
+            >
+              {statuses.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
 
       {/* Faculty Table Card */}
       <Card className="text-left">
-        <CardContent>
+        <CardContent className="p-6">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse min-w-[800px]">
               <thead>
                 <tr className="border-b border-border-color text-xs font-bold text-secondary-text uppercase tracking-wider font-mono">
-                  <th className="pb-3">Faculty</th>
-                  <th className="pb-3">Department</th>
-                  <th className="pb-3">Designation</th>
-                  <th className="pb-3">Role</th>
-                  <th className="pb-3">Responsibility</th>
-                  <th className="pb-3 text-right">Status</th>
+                  <th className="pb-3 text-left">Faculty</th>
+                  <th className="pb-3 text-left">Department</th>
+                  <th className="pb-3 text-left">Designation</th>
+                  <th className="pb-3 text-left">Role</th>
+                  <th className="pb-3 text-left">Responsibility</th>
+                  <th className="pb-3 text-left">Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-border-color">
                 {displayedRecords.length > 0 ? (
-                  displayedRecords.map((rec) => (
-                    <tr
-                      key={rec.email}
-                      className="border-b border-border-color last:border-0 hover:bg-muted-bg/30 transition-colors"
-                    >
-                      <td className="py-4">
-                        <div className="flex flex-col">
-                          <span className="text-sm font-bold text-primary-text">
-                            {rec.name}
-                          </span>
-                          <span className="text-xs text-secondary-text font-mono">
-                            {rec.email}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-4 text-sm text-primary-text font-semibold">
-                        {rec.department}
-                      </td>
-                      <td className="py-4 text-sm text-secondary-text">
-                        {rec.designation}
-                      </td>
-                      <td className="py-4 text-sm text-secondary-text">
-                        {rec.role}
-                      </td>
-                      <td className="py-4 text-sm text-secondary-text max-w-xs truncate">
-                        {rec.responsibility}
-                      </td>
-                      <td className="py-4 text-right">
-                        <Badge
-                          variant={
-                            rec.status === "ACTIVE"
-                              ? "success"
-                              : rec.status === "ON LEAVE"
-                              ? "warning"
-                              : "neutral"
-                          }
-                        >
-                          {rec.status}
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))
+                  displayedRecords.map((rec) => {
+                    // Initials for avatar
+                    const initials = rec.name
+                      .split(" ")
+                      .filter((n) => !n.includes("."))
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2);
+
+                    return (
+                      <tr key={rec.email} className="hover:bg-muted-bg/30 transition-colors">
+                        <td className="py-4 pr-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-primary-blue/10 text-primary-blue flex items-center justify-center font-bold text-xs shrink-0 select-none">
+                              {initials}
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-sm font-semibold text-primary-text leading-tight">
+                                {rec.name}
+                              </span>
+                              <span className="text-xs text-secondary-text font-mono mt-0.5">
+                                {rec.email}
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-4 pr-4 text-sm text-primary-text font-medium">
+                          {rec.department}
+                        </td>
+                        <td className="py-4 pr-4 text-sm text-secondary-text">
+                          {rec.designation}
+                        </td>
+                        <td className="py-4 pr-4 text-sm text-secondary-text">
+                          {rec.role}
+                        </td>
+                        <td className="py-4 pr-4 text-sm text-secondary-text max-w-xs truncate">
+                          {rec.responsibility}
+                        </td>
+                        <td className="py-4 text-left">
+                          <Badge
+                            variant={
+                              rec.status === "ACTIVE"
+                                ? "success"
+                                : rec.status === "ON LEAVE"
+                                ? "warning"
+                                : "danger"
+                            }
+                            className="font-bold text-[10px] uppercase font-mono tracking-wider"
+                          >
+                            {rec.status}
+                          </Badge>
+                        </td>
+                      </tr>
+                    );
+                  })
                 ) : (
                   <tr>
                     <td colSpan={6} className="py-8 text-center text-secondary-text text-sm">
@@ -242,10 +271,10 @@ export const FacultyPage: React.FC = () => {
           </div>
 
           {/* Footer & Pagination */}
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-border-color text-xs font-semibold text-secondary-text">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-border-color text-xs font-semibold text-secondary-text font-mono uppercase tracking-wide">
             <span>
               Showing {displayedRecords.length > 0 ? (page - 1) * 5 + 1 : 0} to{" "}
-              {Math.min(page * 5, filteredRecords.length)} of {filteredRecords.length} faculty members (total database: 24)
+              {Math.min(page * 5, filteredRecords.length)} of {filteredRecords.length} faculty members
             </span>
 
             <div className="flex items-center gap-2">
@@ -254,7 +283,7 @@ export const FacultyPage: React.FC = () => {
                 size="sm"
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
-                className="py-1 cursor-pointer"
+                className="py-1.5 cursor-pointer font-mono"
               >
                 Prev
               </Button>
@@ -263,7 +292,7 @@ export const FacultyPage: React.FC = () => {
                 size="sm"
                 disabled={page * 5 >= filteredRecords.length}
                 onClick={() => setPage(page + 1)}
-                className="py-1 cursor-pointer"
+                className="py-1.5 cursor-pointer font-mono"
               >
                 Next
               </Button>

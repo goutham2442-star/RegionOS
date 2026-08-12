@@ -197,7 +197,7 @@ export const Profile: React.FC = () => {
       </div>
 
       {/* Content layout */}
-      <form onSubmit={handleSaveChanges} className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
+      <form onSubmit={handleSaveChanges} className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-left items-start mt-4">
         
         {/* Left Side: Summary Card */}
         <div className="flex flex-col gap-6">
@@ -216,14 +216,14 @@ export const Profile: React.FC = () => {
 
             <div className="w-full border-t border-border-color my-5" />
 
-            <div className="flex flex-col gap-3.5 w-full text-xs text-secondary-text font-medium">
+            <div className="flex flex-col gap-3.5 w-full text-xs font-bold font-mono uppercase tracking-wider text-secondary-text">
               <div className="flex items-center justify-between">
-                <span>Account Status</span>
-                <Badge variant="success" className="font-semibold uppercase font-mono tracking-wider">ACTIVE</Badge>
+                <span>STATUS</span>
+                <Badge variant="success" className="font-bold uppercase tracking-wider text-[10px]">ACTIVE</Badge>
               </div>
               <div className="flex items-center justify-between">
                 <span>Last Login</span>
-                <span className="font-semibold text-primary-text font-mono">Today, 09:42 AM</span>
+                <span className="text-primary-text font-semibold">Today, 09:42 AM</span>
               </div>
             </div>
           </Card>
@@ -324,7 +324,7 @@ export const Profile: React.FC = () => {
                     </h4>
                     <Badge variant="success" className="font-semibold uppercase tracking-wider font-mono">ENABLED</Badge>
                   </div>
-                  <p className="text-xs text-secondary-text m-0">
+                  <p className="text-xs text-secondary-text m-0 mt-0.5">
                     Add an extra layer of security to your account.
                   </p>
                 </div>
@@ -333,7 +333,7 @@ export const Profile: React.FC = () => {
                   variant="secondary"
                   size="sm"
                   onClick={() => setShowTwoFactorModal(true)}
-                  className="cursor-pointer"
+                  className="cursor-pointer font-semibold"
                 >
                   Manage 2FA
                 </Button>
@@ -343,7 +343,7 @@ export const Profile: React.FC = () => {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex flex-col gap-1">
                   <h4 className="text-sm font-bold text-primary-text m-0">Password</h4>
-                  <p className="text-xs text-secondary-text m-0">
+                  <p className="text-xs text-secondary-text m-0 mt-0.5">
                     Last changed 2 months ago.
                   </p>
                 </div>
@@ -352,7 +352,7 @@ export const Profile: React.FC = () => {
                   variant="secondary"
                   size="sm"
                   onClick={() => setShowPasswordModal(true)}
-                  className="cursor-pointer"
+                  className="cursor-pointer font-semibold"
                 >
                   Change Password
                 </Button>
@@ -366,14 +366,14 @@ export const Profile: React.FC = () => {
               type="button"
               variant="secondary"
               onClick={() => navigate("/dashboard")}
-              className="cursor-pointer px-5 py-2.5 text-xs tracking-wider uppercase font-mono"
+              className="cursor-pointer px-5 py-2 text-xs font-mono font-bold tracking-wider uppercase"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              variant="blue"
-              className="cursor-pointer px-5 py-2.5 text-xs font-semibold tracking-wider uppercase font-mono shadow-sm"
+              variant="primary"
+              className="cursor-pointer px-5 py-2 text-xs font-mono font-bold tracking-wider uppercase shadow-sm"
             >
               Save Changes
             </Button>
