@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { RegionOSLogo } from "../brand/RegionOSLogo";
 import {
   LayoutDashboard,
@@ -19,6 +19,8 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
+  const location = useLocation();
+
   const mainNavItems = [
     { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
     { name: "Campus", path: "/campus", icon: Building2 },
@@ -34,6 +36,29 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
 
   const handleLinkClick = () => {
     if (onClose) onClose();
+  };
+
+  const isItemActive = (itemPath: string) => {
+    // Check if there are query parameters in the item path
+    const hasSearch = itemPath.includes("?");
+    const [pathPart, searchPart] = itemPath.split("?");
+
+    if (hasSearch) {
+      return location.pathname === pathPart && location.search === `?${searchPart}`;
+    }
+
+    // Exact matches or specific routing behavior
+    if (pathPart === "/aligns") {
+      return location.pathname === "/aligns" && location.search === "";
+    }
+    if (pathPart === "/dashboard") {
+      return location.pathname === "/dashboard";
+    }
+    if (pathPart === "/campus") {
+      return location.pathname.startsWith("/campus");
+    }
+
+    return location.pathname === pathPart;
   };
 
   return (
@@ -69,46 +94,48 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
 
           {/* Navigation Section */}
           <nav className="flex flex-col gap-1.5">
-            {mainNavItems.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                onClick={handleLinkClick}
-                className={({ isActive }) => {
-                  const baseClass =
-                    "flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all group focus:outline-none focus:ring-1 focus:ring-primary-blue";
-                  return isActive
+            {mainNavItems.map((item) => {
+              const active = isItemActive(item.path);
+              const baseClass =
+                "flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all group focus:outline-none focus:ring-1 focus:ring-primary-blue";
+              return (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  onClick={handleLinkClick}
+                  className={active
                     ? `${baseClass} bg-primary-blue text-white shadow-sm font-semibold`
-                    : `${baseClass} text-[#9CA3AF] hover:text-white hover:bg-white/5`;
-                }}
-              >
-                <item.icon className="w-4 h-4 shrink-0" />
-                <span>{item.name}</span>
-              </NavLink>
-            ))}
+                    : `${baseClass} text-[#9CA3AF] hover:text-white hover:bg-white/5`}
+                >
+                  <item.icon className="w-4 h-4 shrink-0" />
+                  <span>{item.name}</span>
+                </NavLink>
+              );
+            })}
           </nav>
         </div>
 
         {/* Bottom Part: Settings, Help, Logout */}
         <div className="flex flex-col gap-4 border-t border-[#1e293b] pt-5">
           <nav className="flex flex-col gap-1.5">
-            {bottomNavItems.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                onClick={handleLinkClick}
-                className={({ isActive }) => {
-                  const baseClass =
-                    "flex items-center gap-3 px-4 py-2 text-sm font-medium transition-all group focus:outline-none";
-                  return isActive
-                    ? `${baseClass} bg-primary-blue text-white shadow-sm`
-                    : `${baseClass} text-[#9CA3AF] hover:text-white hover:bg-white/5`;
-                }}
-              >
-                <item.icon className="w-4 h-4 shrink-0" />
-                <span>{item.name}</span>
-              </NavLink>
-            ))}
+            {bottomNavItems.map((item) => {
+              const active = isItemActive(item.path);
+              const baseClass =
+                "flex items-center gap-3 px-4 py-2 text-sm font-medium transition-all group focus:outline-none";
+              return (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  onClick={handleLinkClick}
+                  className={active
+                    ? `${baseClass} bg-primary-blue text-white shadow-sm font-semibold`
+                    : `${baseClass} text-[#9CA3AF] hover:text-white hover:bg-white/5`}
+                >
+                  <item.icon className="w-4 h-4 shrink-0" />
+                  <span>{item.name}</span>
+                </NavLink>
+              );
+            })}
           </nav>
 
           <NavLink
