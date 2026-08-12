@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Bell, User } from "lucide-react";
+import { Bell, User, Menu } from "lucide-react";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { authService } from "../../services/authService";
 import type { UserProfile } from "../../data/mockProfileData";
 
-export const Topbar: React.FC = () => {
+interface TopbarProps {
+  onToggleSidebar?: () => void;
+}
+
+export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
   useEffect(() => {
@@ -13,16 +17,23 @@ export const Topbar: React.FC = () => {
   }, []);
 
   return (
-    <header className="h-16 bg-white border-b border-border-color flex items-center justify-between px-8 select-none">
-      {/* Breadcrumbs Left */}
+    <header className="h-16 bg-white border-b border-border-color flex items-center justify-between px-6 md:px-8 select-none">
+      {/* Breadcrumbs & Mobile Menu Button Left */}
       <div className="flex items-center">
+        <button
+          onClick={onToggleSidebar}
+          className="mr-3 p-1.5 text-secondary-text hover:text-primary-blue hover:bg-muted-bg rounded-lg md:hidden focus:outline-none cursor-pointer"
+          aria-label="Open sidebar"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
         <Breadcrumbs />
       </div>
 
       {/* Actions Right */}
       <div className="flex items-center gap-4">
         {/* Notification Bell */}
-        <button className="p-2 text-secondary-text hover:text-primary-blue hover:bg-muted-bg rounded-full transition-all relative focus:outline-none cursor-pointer">
+        <button className="p-2 text-secondary-text hover:text-primary-blue hover:bg-muted-bg rounded-full transition-all relative focus:outline-none cursor-pointer" aria-label="Notifications">
           <Bell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-blue rounded-full" />
         </button>
@@ -35,7 +46,7 @@ export const Topbar: React.FC = () => {
           to="/profile"
           className="flex items-center gap-3 hover:opacity-90 transition-opacity focus:outline-none"
         >
-          <div className="text-right hidden sm:flex flex-col">
+          <div className="text-right hidden sm:flex flex-col text-left">
             <span className="text-sm font-semibold text-primary-text leading-none">
               {profile?.name || "Administrator"}
             </span>
