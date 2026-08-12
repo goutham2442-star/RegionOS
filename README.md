@@ -1,32 +1,32 @@
-# React + TypeScript + Vite
+# RegionOS
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+RegionOS is a frontend prototype for a regional university/campus governance and management platform.
 
-Currently, two official plugins are available:
+## Scope
+- **Frontend-only**: Contains mock authentication flows, dashboards, and pages.
+- **Mock Data**: Uses pre-configured frontend data models under `src/data/` for demonstration.
+- **Service Boundaries**: Implements a service abstraction layer (`src/services/`) mapping to mock data. In the upcoming development phase, backend API connections can easily drop into this service layer without necessitating UI edits.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
+- **Authentication**: Minimalist Splash screen transitions, Login inputs validation with password eye-toggles, and Registration screens.
+- **Regional Dashboard**: Greeting blocks, date indicators, Campus navigation cards, Aligns metrics, and future integration holders.
+- **Campus module consoles**: Detailed modules for RGU campus overviewing:
+  - **Faculty**: Search inputs, designation/department filters, and working frontend pagination.
+  - **Fees**: overall fiscal collection rates, Area Chart trend lines, Bar Chart course ratios, and Send Reminder toast feedback.
+  - **Placements**: Placed ratio progress, recruiter listings, and CSV download targets.
+  - **Power BI / Analytics**: Mock embedded workspace analytics, Enrollment area graphs, custom Placement donuts, and Student Performance selectors.
+- **System Settings, User Profiles, & expandable FAQ Accordion menus**.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Local Development
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Launch Vite dev server:
+   ```bash
+   npm run dev
+   ```
+3. Compile production bundles:
+   ```bash
+   npm run build
+   ```
