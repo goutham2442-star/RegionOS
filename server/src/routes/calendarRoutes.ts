@@ -165,4 +165,36 @@ router.post("/notifications/mark-read", async (req: Request, res: Response) => {
   }
 });
 
+// POST force trigger reminder for testing
+router.post("/events/:id/trigger-reminder", async (req: Request, res: Response) => {
+  try {
+    const db = await getDatabase();
+    const event = await db.get("SELECT * FROM events WHERE id = ?", [req.params.id]);
+    if (!event) {
+      return res.status(404).json({ success: false, message: "Meeting not found" });
+    }
+
+    const notificationTitle = "Upcoming Meeting";
+    const notificationBody = `[TEST] ${event.title} starts in 10 minutes.`;
+    
+    const [h, m] = event.startTime.split(":");
+    const ampm = Number(h) >= 12 ? "PM" : "AM";
+    const formattedHour = Number(h) % 12 || 12;
+    const timeInfo = `${formattedHour}:${m} ${ampm} • ${event.location || "Virtual"}`;
+
+    const now = new Date();
+    await db.run(
+      `INSERT INTO notifications (title, body, timeInfo, unread, createdAt)
+       VALUES (?, ?, ?, 1, ?)`,
+      [notificationTitle, notificationBody, timeInfo, now.toISOString()]
+    );
+
+    await db.run("UPDATE events SET reminderSent = 1 WHERE id = ?", [event.id]);
+
+    res.json({ success: true, message: "Test reminder triggered successfully" });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message || "Internal server error" });
+  }
+});
+
 export default router;

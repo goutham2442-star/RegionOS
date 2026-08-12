@@ -19,89 +19,89 @@ export interface NotificationItem {
   createdAt: string;
 }
 
+// Safe API fetch and parse helper
+async function safeJsonFetch(url: string, options?: RequestInit) {
+  try {
+    const res = await fetch(url, options);
+    
+    if (!res.ok) {
+      let errMsg = "Unable to connect to Calendar service. Please try again.";
+      try {
+        const errJson = await res.json();
+        if (errJson && errJson.message) {
+          errMsg = errJson.message;
+        }
+      } catch (e) {
+        // Ignored, fallback to generic error message
+      }
+      throw new Error(errMsg);
+    }
+
+    const text = await res.text();
+    if (!text || text.trim() === "") {
+      return { success: true };
+    }
+
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      throw new Error("Unable to connect to Calendar service. Please try again.");
+    }
+  } catch (err: any) {
+    throw new Error(err.message || "Unable to connect to Calendar service. Please try again.");
+  }
+}
+
 export const calendarService = {
   // Get all events
   async getEvents(): Promise<CalendarEvent[]> {
-    const res = await fetch("/api/calendar/events");
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to load events");
-    }
-    const json = await res.json();
-    return json.data;
+    const json = await safeJsonFetch("/api/calendar/events");
+    return json.data || [];
   },
 
   // Get single event
   async getEvent(id: number): Promise<CalendarEvent> {
-    const res = await fetch(`/api/calendar/events/${id}`);
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to load event");
-    }
-    const json = await res.json();
+    const json = await safeJsonFetch(`/api/calendar/events/${id}`);
     return json.data;
   },
 
   // Create event
   async createEvent(event: CalendarEvent): Promise<CalendarEvent> {
-    const res = await fetch("/api/calendar/events", {
+    const json = await safeJsonFetch("/api/calendar/events", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(event),
     });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to create event");
-    }
-    const json = await res.json();
     return json.data;
   },
 
   // Update event
   async updateEvent(id: number, event: CalendarEvent): Promise<CalendarEvent> {
-    const res = await fetch(`/api/calendar/events/${id}`, {
+    const json = await safeJsonFetch(`/api/calendar/events/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(event),
     });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to update event");
-    }
-    const json = await res.json();
     return json.data;
   },
 
   // Delete event
   async deleteEvent(id: number): Promise<void> {
-    const res = await fetch(`/api/calendar/events/${id}`, {
+    await safeJsonFetch(`/api/calendar/events/${id}`, {
       method: "DELETE",
     });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to delete event");
-    }
   },
 
   // Get notifications
   async getNotifications(): Promise<NotificationItem[]> {
-    const res = await fetch("/api/calendar/notifications");
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to load notifications");
-    }
-    const json = await res.json();
-    return json.data;
+    const json = await safeJsonFetch("/api/calendar/notifications");
+    return json.data || [];
   },
 
   // Mark all notifications as read
   async markNotificationsRead(): Promise<void> {
-    const res = await fetch("/api/calendar/notifications/mark-read", {
+    await safeJsonFetch("/api/calendar/notifications/mark-read", {
       method: "POST",
     });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to mark notifications read");
-    }
   },
 };
